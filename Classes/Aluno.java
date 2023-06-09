@@ -4,10 +4,12 @@ package Classes;
 public class Aluno {
     protected String nome;
     protected String respostas;
+    protected int nota;
 
-    public Aluno(String nome, String respostas) {
+    public Aluno(String nome, String respostas, int nota) {
         this.nome = nome;
         this.respostas = respostas;
+        this.nota = nota;
     }
 
     public String getNome() {
@@ -25,5 +27,13 @@ public class Aluno {
     public void setRespostas(String respostas) {
         this.respostas = respostas;
     }
+
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(int nota) {
+		this.nota = nota;
+	}
 
 }
