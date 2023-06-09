@@ -42,13 +42,13 @@ public class Main {
                 			try {
                 				System.out.println("Digite o nome da disciplina");
                 				String disc1 = scanner4.nextLine();
-                				Disciplina d = new Disciplina(disc1);
                 				FileReader fr = new FileReader(disc1 + "Gabarito.txt");
+                				Disciplina d = new Disciplina(disc1);
                 				System.out.println("Digite as respostas do aluno: ");
                     			String resposta = scanner2.nextLine();
-                    			System.out.println("Digite o nome do aluno: ");
+                    			System.out.println("Digite o nome e sobrenome do aluno: ");
                     			String nome = scanner3.nextLine();
-                    			Aluno a = new Aluno(nome, resposta);
+                    			Aluno a = new Aluno(nome, resposta, 0);
                     			d.adicionarResposta(a);
                     			fr.close();
                 			} catch (FileNotFoundException e) {
@@ -62,7 +62,18 @@ public class Main {
                     break;
 
                 case 2:
-                	System.out.println("Digite a disciplina que deseja ver");
+                	try {
+                		System.out.println("Digite a disciplina que deseja ver");
+                		String disc1 = scanner1.nextLine();
+                		Disciplina d = new Disciplina(disc1);
+        				FileReader fr = new FileReader(disc1 + "Gabarito.txt");
+        				d.ordenarNotas();
+        				fr.close();
+                	} catch(FileNotFoundException e) {
+                		System.out.println("Disciplina não encontrada");
+                	} catch(IOException e) {
+                		System.out.println("Erro na leitura\n");
+                	}
                     break;
 
                 case 3:
