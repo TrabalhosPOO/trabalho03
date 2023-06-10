@@ -1,7 +1,8 @@
 package Classes;
 
+import java.util.Collections;
 
-public class Aluno {
+public class Aluno implements Comparable<Aluno>{
     protected String nome;
     protected String respostas;
     protected int nota;
@@ -11,6 +12,12 @@ public class Aluno {
         this.respostas = respostas;
         this.nota = nota;
     }
+    
+    @Override
+    public int compareTo(Aluno outroAluno) {
+    	return this.nome.compareTo(outroAluno.getNome());
+    }
+    
 
     public String getNome() {
         return nome;

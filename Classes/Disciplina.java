@@ -1,14 +1,11 @@
 package Classes;
 
-import java.util.ArrayList;
-
+import java.util.*;
 import java.io.*;
-import java.util.Scanner;
 
 public class Disciplina {
     protected String nome;
     protected ArrayList<Aluno> alunos;
-    protected Scanner pos;
     protected String gabarito;
 
     public Disciplina(String nome) {
@@ -65,7 +62,7 @@ public class Disciplina {
 				alunos.add(a);
 				l = br.readLine();
 			}
-			System.out.println(alunos.get(1).getRespostas());
+			
 			for(int i = 0; i < alunos.size(); i++) {
 				for(int j = 0; j < 10; j ++) {
 					if(l1.substring(j,j+1)
@@ -73,9 +70,7 @@ public class Disciplina {
 						alunos.get(i).setNota(alunos.get(i).getNota() + 1);
 					}
 				}
-			}
-			br.close();
-			br1.close();	
+			}	
 			int Soma = 0;
 			Aluno ordem = new Aluno(" ", " " ,0);
 			ArrayList<Aluno> OrdemNota = new ArrayList<>();
@@ -88,8 +83,8 @@ public class Disciplina {
 					if(alunos.get(i).getNota() >= alunos.get(j).getNota()) {
 						Soma += 1;
 					}
-					else if(((alunos.get(i).getNota() 
-							== alunos.get(j).getNota()) && (j >= i))) {
+					if(((alunos.get(i).getNota() 
+							== alunos.get(j).getNota()) && (j > i))) {
 						Soma += 1;
 					}
 				}
@@ -97,11 +92,13 @@ public class Disciplina {
 				OrdemNota.add(alunos.size() - Soma, alunos.get(i));
 				Soma = 0;
 			}
-			bw.write("Respostas -------- Nome -------- Nota");
-			bw.newLine();
+			System.out.println("\n");
 			for(int i = 0; i < OrdemNota.size() ; i++) {
 				if(OrdemNota.get(i).getNome().equals(" ")) {}
 				else {
+					System.out.println("Respostas: " + OrdemNota.get(i).getRespostas() 
+							+ "	Nome: " + OrdemNota.get(i).getNome() + 
+							"	Nota: " + OrdemNota.get(i).getNota());
 				Integer.toString(OrdemNota.get(i).getNota());
 				bw.write(OrdemNota.get(i).getRespostas() + " " 
 			+ OrdemNota.get(i).getNome() + " " + OrdemNota.get(i).getNota());
@@ -109,7 +106,14 @@ public class Disciplina {
 				}
 			}
 			
+			File diretorio = new File("/home/bruno/eclipse-workspace.p/" + 
+			this.nome + "Gabarito.txt");
+			System.out.println("Localizaçao do gabarito: " 
+			+ diretorio.getAbsolutePath());
+			br.close();
+			br1.close();
 		}
+    	
     	bw.close();
     	fw.close();
     	fr.close();
@@ -119,6 +123,22 @@ public class Disciplina {
 		}
     }
     
+    public void ordenarNomes() {
+    	ArrayList<Aluno> ordemAlfabetica = new ArrayList<Aluno>();
+    	
+    	for(int i = 0; i < alunos.size(); i++) {
+			ordemAlfabetica.add(i,alunos.get(i));
+    	}
+    	
+    	Collections.sort((List<Aluno>) ordemAlfabetica);
+    	System.out.println("\n");
+    	
+    	for(Aluno aluno: ordemAlfabetica) {
+    		System.out.println("Respostas: " + aluno.getRespostas() + 
+    				"Nome: " + aluno.getNome() + "Nota: " + aluno.getNota());
+    	}
+			
+    }
 
     public String getNome() {
         return nome;
