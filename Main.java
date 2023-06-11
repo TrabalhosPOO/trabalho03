@@ -46,17 +46,22 @@ public class Main {
                 				Disciplina d = new Disciplina(disc1);
                 				System.out.println("Digite as respostas do aluno: ");
                     			String resposta = scanner2.nextLine();
+                    			if(resposta.length() != 10) {
+                    				System.out.println("Digite a quantidade certa de respostas");
+                    				fr.close();
+                    			} else {
                     			System.out.println("Digite o nome e sobrenome do aluno: ");
                     			String nome = scanner3.nextLine();
                     			Aluno a = new Aluno(nome, resposta, 0);
                     			d.adicionarResposta(a);
                     			fr.close();
+                    			}
                 			} catch (FileNotFoundException e) {
                 				System.out.println("Disciplina não encontrada\n");
                 			} catch (IOException e) {
                 				System.out.println("Erro na leitura\n");
                 			}
-                			
+                	
                 		}
                 	}
                     break;
@@ -68,9 +73,11 @@ public class Main {
                 		Disciplina d = new Disciplina(disc1);
         				FileReader fr = new FileReader(disc1 + "Gabarito.txt");
         				d.ordenarNotas();
+        				d.ordenarNomes();
         				fr.close();
                 	} catch(FileNotFoundException e) {
-                		System.out.println("Disciplina não encontrada");
+                		System.out.println("Disciplina não encontrada ou"
+                				+ " não cadastrada");
                 	} catch(IOException e) {
                 		System.out.println("Erro na leitura\n");
                 	}
