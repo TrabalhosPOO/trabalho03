@@ -37,7 +37,7 @@ public class Disciplina {
     		this.alunos.add(m);
     		fw1 = new FileWriter(this.nome + ".txt", true);
     		BufferedWriter bw = new BufferedWriter(fw1);
-    		bw.write(m.getRespostas() + " " + m.getNome() + " ");
+    		bw.write(m.getRespostas() + "\t" + m.getNome() + "\t");
     		bw.newLine();
     		bw.close();
     		fw1.close();
@@ -57,22 +57,29 @@ public class Disciplina {
 			String l = br.readLine();
 			String l1 = br1.readLine();
 			while(l != null) {
-				String[] dados = l.split(" ");
-				Aluno a = new Aluno(dados[1] + " " + dados[2], dados[0], 0);
+				String[] dados = l.split("\t");
+				Aluno a = new Aluno(dados[1], dados[0], 0);
 				alunos.add(a);
 				l = br.readLine();
 			}
 			
 			for(int i = 0; i < alunos.size(); i++) {
+				if(alunos.get(i).getRespostas().equals("VVVVVVVVVV") ||
+						alunos.get(i).getRespostas().equals("FFFFFFFFFF")) {
+					alunos.get(i).setNota(0);
+				} else {
 				for(int j = 0; j < 10; j ++) {
 					if(l1.substring(j,j+1)
 					.equals(alunos.get(i).getRespostas().substring(j,j+1))) {
 						alunos.get(i).setNota(alunos.get(i).getNota() + 1);
 					}
 				}
-			}	
+				}
+			}
+			
+			
 			int Soma = 0;
-			Aluno ordem = new Aluno(" ", " " ,0);
+			Aluno ordem = new Aluno(" ", " ",0);
 			ArrayList<Aluno> OrdemNota = new ArrayList<>();
 			for(int i = 0; i < alunos.size() ; i++) {
 				OrdemNota.add(i,ordem);
@@ -80,7 +87,7 @@ public class Disciplina {
 
 			for(int i = 0; i < alunos.size() ; i++) {
 				for(int j = 0; j < alunos.size() ; j++) {
-					if(alunos.get(i).getNota() >= alunos.get(j).getNota()) {
+					if(alunos.get(i).getNota() > alunos.get(j).getNota()) {
 						Soma += 1;
 					}
 					if(((alunos.get(i).getNota() 
@@ -89,27 +96,23 @@ public class Disciplina {
 					}
 				}
 				
-				OrdemNota.add(alunos.size() - Soma, alunos.get(i));
+				OrdemNota.add(alunos.size() - Soma - 1, alunos.get(i));
 				Soma = 0;
 			}
 			System.out.println("\n");
-			for(int i = 0; i < OrdemNota.size() ; i++) {
+			System.out.println("-----------ORDEM NOTA-----------");	
+			for(int i = 0; i < OrdemNota.size(); i++) {
 				if(OrdemNota.get(i).getNome().equals(" ")) {}
 				else {
 					System.out.println("Respostas: " + OrdemNota.get(i).getRespostas() 
-							+ "	Nome: " + OrdemNota.get(i).getNome() + 
-							"	Nota: " + OrdemNota.get(i).getNota());
+							+ "\tNome: " + OrdemNota.get(i).getNome() + 
+							"\tNota: " + OrdemNota.get(i).getNota());
 				Integer.toString(OrdemNota.get(i).getNota());
-				bw.write(OrdemNota.get(i).getRespostas() + " " 
-			+ OrdemNota.get(i).getNome() + " " + OrdemNota.get(i).getNota());
+				bw.write(OrdemNota.get(i).getRespostas() + "	" 
+			+ OrdemNota.get(i).getNome() + "	" + OrdemNota.get(i).getNota());
 				bw.newLine();
 				}
 			}
-			
-			File diretorio = new File("/home/bruno/eclipse-workspace.p/" + 
-			this.nome + "Gabarito.txt");
-			System.out.println("Localizaçao do gabarito: " 
-			+ diretorio.getAbsolutePath());
 			br.close();
 			br1.close();
 		}
@@ -132,12 +135,15 @@ public class Disciplina {
     	
     	Collections.sort((List<Aluno>) ordemAlfabetica);
     	System.out.println("\n");
-    	
+    	System.out.println("-----------ORDEM ALFABÉTICA-----------");
     	for(Aluno aluno: ordemAlfabetica) {
     		System.out.println("Respostas: " + aluno.getRespostas() + 
-    				"Nome: " + aluno.getNome() + "Nota: " + aluno.getNota());
+    				"\tNome: " + aluno.getNome() + "\tNota: " + aluno.getNota());
     	}
-			
+    	File diretorio = new File("/home/bruno/eclipse-workspace.p/" + 
+    			this.nome + "Gabarito.txt");
+    			System.out.println("\nLocalizaçao do gabarito: " 
+    			+ diretorio.getAbsolutePath());
     }
 
     public String getNome() {

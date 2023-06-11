@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.Collections;
 
 public class Aluno implements Comparable<Aluno>{
     protected String nome;
